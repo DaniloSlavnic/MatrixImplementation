@@ -199,6 +199,23 @@ Matrix<T>& Matrix<T>::operator*(const Matrix<T>& obj){
     for(int i = 0; i < rows; i++)
         for(int j = 0; j < obj.cols; j++)
             result[i][j] = dotProduct(row(i), obj.column(j));
+    return Matrix(result);
+}
+
+template<typename T>
+Matrix<T>& Matrix<T>::operator*(const Matrix<T>& obj){
+    if(cols != obj.row){
+        out_of_range err("Matrices are not compatible for Matrix Multiplication.")
+        throw(err);
+    }
+    T** result = new T[rows]
+    for(int i = 0; i < rows; i++)
+        result[i] = new T[obj.cols];
+    for(int i = 0; i < rows; i++)
+        for(int j = 0; j < obj.cols; j++)
+            result[i][j] = dotProduct(row(i), obj.column(j));
+    *this = Matrix(result);
+    return *this;
 }
 template<typename T>
 bool Matrix<T>::operator==(const Matrix<T>& obj){
